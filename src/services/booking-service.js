@@ -46,10 +46,10 @@ async function makePayment(data){
         }
         const bookingTime = new Date(bookingData.createdAt);
         const currentTime  = new Date();
-        // if(currentTime-bookingTime > 300000){
-        //     await cancelBooking(data.bookingId);
-        //     throw new AppError('The booking has expired', StatusCodes.BAD_REQUEST);
-        // }
+        if(currentTime-bookingTime > 3000000){
+            await cancelBooking(data.bookingId);
+            throw new AppError('The booking has expired', StatusCodes.BAD_REQUEST);
+        }
         
         if(bookingData.totalCost != data.totalCost){
             throw new AppError('The amount of the payment doesnt match', StatusCodes.BAD_REQUEST);
